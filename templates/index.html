@@ -57,13 +57,7 @@
     </style>
 </head>
 <body>
-<div id="header">
-    {% if request.user.is_authenticated %}
-        Hello, {{ request.user }}!
-    {% else %}
-        <a href="{% url 'login' %}">Войти</a>
-    {% endif %}
-</div>
+{% include "header.html" %}
 <div id="content">
     {% for item in items %}
     <a class="shop-item" href="{% url 'product' product_id=item.id %}">

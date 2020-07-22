@@ -1,4 +1,5 @@
 from django.db.models import *
+from django.contrib.auth.models import User
 from root import settings
 
 # Create your models here.
@@ -19,6 +20,7 @@ class Item(Model):
 
 
 class Order(Model):
+    user = OneToOneField(User, null=False, on_delete=CASCADE)
     name = CharField(max_length=64, null=False, blank=False)
     address = CharField(max_length=64, null=False, blank=False)
     tel = CharField(max_length=32, null=False, blank=False)

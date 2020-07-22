@@ -63,7 +63,7 @@
     </style>
 </head>
 <body>
-<div id="header"></div>
+{% include "header.html" %}
 <div id="content">
     <div class="product">
         <div class="image">
@@ -75,6 +75,13 @@
             <div class="price">
                 Цена: {{ product.formatted_price }}
             </div>
+            {% if request.user.is_authenticated %}
+            <form action="{% url 'cart' product_id=product.id %}" method="post">
+                Количество: <input type="number" name="amount" value="{{ amount }}" aria-label="Количество">
+                {% csrf_token %}
+                <input type="submit" value="Добавить">
+            </form>
+            {% endif %}
         </div>
     </div>
 </div>

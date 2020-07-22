@@ -1,0 +1,8 @@
+<div id="header">
+    {% if request.user.is_authenticated %}
+        Привет, {{ request.user }}!
+        <a href="{% url 'logout' %}">Выйти</a>
+    {% else %}
+        <a href="{% url 'login' %}">Войти</a>
+    {% endif %}
+</div>

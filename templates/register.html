@@ -47,16 +47,18 @@
 <body>
 <div id="header"></div>
 <div id="content">
-    <form class="form" action="{% url 'login' %}" method="post">
+    <form class="form" action="{% url 'register' %}" method="post">
         <div>Имя пользователя:</div>
         <input type="text" name="username" aria-label="Имя пользователя" required>
         <div>Пароль:</div>
-        <input type="password" name="password" aria-label="Пароль" required>
+        <input id="password" type="password" name="password" aria-label="Пароль" required>
+        <div>Подтвердите пароль:</div>
+        <input id="confirm_password" type="password" name="confirm_password" aria-label="Подтвердите пароль" required>
         {% csrf_token %}
-        <input type="submit" value="Войти"/>
-        <div><a href="{% url 'register' %}">Зарегистрироваться</a></div>
+        <input type="submit" value="Зарегистрироваться"/>
+        <div><a href="{% url 'login' %}">Войти</a></div>
         {% if error %}
-            <div class="error">Неверный email или пароль</div>
+            <div class="error">{{ error }}</div>
         {% endif %}
     </form>
 </div>
