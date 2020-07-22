@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: stretch;
+        }
+        #header {
+            height: 100px;
+            background: hotpink;
+        }
+        #content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: stretch;
+        }
+        #footer {
+            height: 100px;
+            background: hotpink;
+        }
+        .product {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            justify-content: space-around;
+        }
+        .product .image {
+            width: 40%;
+        }
+        .product .image img {
+            width: 100%;
+            height: auto;
+        }
+        .product .container  {
+            padding: 10px;
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: flex-start;
+        }
+        .product .container .price {
+            font-size: 24px;
+            font-weight: bold;
+            padding: 7px;
+        }
+        .product .container .title {
+            font-family: "Comic Sans MS", sans-serif;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 7px 0;
+        }
+    </style>
+</head>
+<body>
+<div id="header"></div>
+<div id="content">
+    <div class="product">
+        <div class="image">
+            <img src="{{ product.image.url }}" alt="Product image">
+        </div>
+        <div class="container">
+            <div class="title">{{ product.title }}</div>
+            <div class="description">{{ product.description }}</div>
+            <div class="price">
+                Цена: {{ product.formatted_price }}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer"></div>
+</body>
+</html>

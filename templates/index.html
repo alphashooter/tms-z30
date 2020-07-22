@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: stretch;
+        }
+        #header {
+            height: 100px;
+            background: hotpink;
+        }
+        #content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+        #footer {
+            height: 100px;
+            background: hotpink;
+        }
+        .shop-item {
+            display: block;
+            margin: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 5px;
+            text-decoration: none;
+            color: black;
+            background: #ffffff;
+            transition: background-color 0.3s linear;
+        }
+        .shop-item:hover {
+            background: #dddddd;
+        }
+        .shop-item .image img {
+            width: 300px;
+            height: 300px;
+        }
+        .shop-item .description {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            height: 30px;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    {% if request.user.is_authenticated %}
+        Hello, {{ request.user }}!
+    {% else %}
+        <a href="{% url 'login' %}">Войти</a>
+    {% endif %}
+</div>
+<div id="content">
+    {% for item in items %}
+    <a class="shop-item" href="{% url 'product' product_id=item.id %}">
+        <div class="image">
+            <img src="{{ item.image.url }}" alt="Product image">
+        </div>
+        <div class="description">
+            <div class="title">{{ item.title }}</div>
+            <div class="price">{{ item.formatted_price }}</div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+<div id="footer"></div>
+</body>
+</html>

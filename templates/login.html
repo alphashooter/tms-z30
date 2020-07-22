@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: stretch;
+        }
+        #header {
+            height: 100px;
+            background: hotpink;
+        }
+        #content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        #footer {
+            height: 100px;
+            background: hotpink;
+        }
+        .form {
+            padding: 10px;
+            border: black 1px solid;
+            border-radius: 5px;
+        }
+        .form input {
+            display: block;
+            width: 300px;
+            margin: 5px 0;
+        }
+        .form .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="header"></div>
+<div id="content">
+    <form class="form" action="{% url 'login' %}" method="post">
+        <div>Имя пользователя:</div>
+        <input type="text" name="username" aria-label="Имя пользователя" required>
+        <div>Пароль:</div>
+        <input type="password" name="password" aria-label="Пароль" required>
+        {% csrf_token %}
+        <input type="submit" value="Войти"/>
+        {% if error %}
+            <div class="error">Неверный email или пароль</div>
+        {% endif %}
+    </form>
+</div>
+<div id="footer"></div>
+</body>
+</html>
