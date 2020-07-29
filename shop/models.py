@@ -1,5 +1,6 @@
 from django.db.models import *
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from root import settings
 
 # Create your models here.
@@ -30,3 +31,15 @@ class OrderItem(Model):
     order = ForeignKey(Order, null=False, on_delete=CASCADE)
     item = ForeignKey(Item, null=False, on_delete=PROTECT)
     amount = IntegerField(null=False)
+
+
+def validate_name(name: str) -> bool:
+    import re
+    if not re.fullmatch('[а-яА-Я ]+', name):
+        raise ValidationError('Invalid name')\
+
+
+class FeedbackModel(Model):
+    name = CharField(max_length=100, null=False, blank=False, validators=[validate_name])
+    email = EmailField(null=False, blank=False)
+    text = TextField(max_length=100, null=False, blank=False)

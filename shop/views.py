@@ -7,6 +7,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
 from django.shortcuts import resolve_url
+from shop.forms import *
 
 # Create your views here.
 
@@ -21,6 +22,8 @@ class Product(View):
     def get(self, request: HttpRequest, product_id: int) -> HttpResponse:
         item = Item.objects.get(pk=product_id)
         amount = 0
+        order = None
+        order_item = None
         user = request.user
         if user.is_authenticated:
             order = Order.objects.filter(user=user).first()
@@ -28,7 +31,7 @@ class Product(View):
                 order_item = OrderItem.objects.filter(order=order, item_id=product_id).first()
                 if order_item:
                     amount = order_item.amount
-        return render(request, 'product.html', {'product': item, 'amount': amount})
+        return render(request, 'product.html', {'product': item, 'order': order, 'cart': order_item, 'amount': amount})
 
 
 class Login(View):
@@ -92,3 +95,17 @@ class Cart(View):
                 else:
                     OrderItem.objects.create(order=order, item_id=product_id, amount=amount)
         return redirect(resolve_url('product', product_id=product_id))
+
+
+class Feedback(View):
+    def get(self, request: HttpRequest) -> HttpResponse:
+        form = FeedbackForm()
+        return render(request, 'feedback.html', {'form': form})
+
+    def post(self, request: HttpRequest) -> HttpResponse:
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return self.get(request)
+        else:
+            return render(request, 'feedback.html', {'form': form})
